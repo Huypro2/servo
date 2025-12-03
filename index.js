@@ -2,10 +2,12 @@ const app = require('express')();
 const server = require('http').createServer(app);
 const options = { /* ... */ };
 const io = require('socket.io')(server, options);
-
+//const path = require('path');             // thêm dòng này chatGPT
+//const express = require('express'); // nếu bạn chưa require express riêng chatGPT
+//app.use(express.static(path.join(__dirname, 'public'))); // dòng 1: phục vụ thư mục public chatGPT
 
 app.get('/', (req, res) => {
-    res.send('Hello World Nodejs Hello..')// phai node .\index.js lai moi hien cai moi
+    res.send('data chao moi nguoi')// phai node .\index.js lai moi hien cai moi-------------------
 })
 //Device ID to emit and on from and to sensor-server-user
 io.on('connection', client => {
@@ -18,19 +20,20 @@ io.on('connection', client => {
         //// cai index.js này là server và cái main.dart là cái app
         // let dht = eval(data);
         // console.log(dht.dht.tempC);
-        //      io.emit("server2user", data)
+        //      io.emit("server2user", data)    nên lấy  tempObjectC    thôi
     })
-
+//////moi them cho nay-------------------
+    client.on("alert-buzzer", msg => {
+    console.log("⚠ Lệnh cảnh báo:", msg);
+    io.emit("buzzer-control", msg);  // gửi xuống ESP8266
+    })
+//////----------------------------------
     client.on("from-user", data =>{
         console.log(data);
-    } )
-
+    })
     client.on('disconnect', () => console.log(`Client disconnected`))//khi ngat ket noi esp thi in ra
-
 })
-
-
-const PORT = 3484;
+const PORT = 3484;///80;
 server.listen(process.env.PORT || PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
