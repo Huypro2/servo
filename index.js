@@ -33,7 +33,7 @@ io.on('connection', client => {
     })
     client.on('disconnect', () => console.log(`Client disconnected`))//khi ngat ket noi esp thi in ra
 })
-const PORT = 3484;///80;
+const PORT = 80;//3484;///80;
 server.listen(process.env.PORT || PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
